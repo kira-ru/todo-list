@@ -1,0 +1,55 @@
+.container {
+    margin: 0 10px 0 0;
+}
+
+.badge {
+    display: inline-block;
+    box-sizing: border-box;
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    cursor: pointer;
+}
+
+.active {
+    border: 2px solid #544b66;
+}
+
+.badge-small {
+    width: 10px;
+    height: 10px;
+}
+
+.badge-big {
+    width: 20px;
+    height: 20px;
+    margin: 0 0 0 0;
+}
+
+.green {
+    background: #42b883;
+}
+
+.grey {
+    background: #C9D1D3;
+
+}
+.blue {
+    background: #64C4ED;
+}
+.pink {
+    background: #FFBBCC;
+
+}
+.lime {
+    background: #B6E6BD;
+}
+.purple {
+    background: #C355F5;
+}
+.black {
+    background: #110133;
+}
+.red {
+    background: #FF6464;
+}

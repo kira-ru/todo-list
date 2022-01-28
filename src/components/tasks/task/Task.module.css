@@ -1,0 +1,82 @@
+.task {
+    display: flex;
+    align-items: center;
+}
+
+.task input {
+    display: none;
+}
+
+.checkbox {
+    position: relative;
+    display: inline-block;
+    margin: 0 15px 0 0;
+}
+
+.container {
+    cursor: pointer;
+    display: inline-block;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%  ;
+    border: 2px solid #E8E8E8;
+    box-sizing: border-box;
+}
+
+
+.checkbox:hover label {
+    background: #f2f2f2;
+}
+
+.checkbox:hover svg {
+    opacity: 0.2;
+}
+
+svg {
+    opacity: 0;
+    cursor: pointer;
+    position: absolute;
+    text-align: center;
+    top: 6px;
+    left: 5px;
+}
+
+input:checked + .container svg{
+    opacity: 0.9;
+}
+
+input:checked + .container svg path{
+    stroke: #FFFFFF;
+}
+
+.text {
+    display: inline-block;
+    font-weight: 500;
+    font-size: 16px;
+    line-height: 19px;
+    color: #000000;
+}
+
+input:checked + .container {
+    background: #339d64;
+    border: #339d64;
+}
+
+/*
+.checkbox:hover svg path {
+    stroke: #b2b2b2;
+}
+
+.checkbox:hover label {
+    background: #f2f2f2;
+}
+
+input:checked + label {
+    background: #339d64;
+    border: #339d64;
+}
+
+input:checked + label svg {
+    opacity: 0.8;
+}
+*/

@@ -1,0 +1,14 @@
+@import-normalize;
+
+:active, :hover, :focus {
+  outline: 0;
+  outline-offset: 0;
+}
+
+body {
+  font-family: 'Roboto', -apple-system, system-ui, sans-serif;
+}
+
+
+/* Общие стили */
+

@@ -1,0 +1,32 @@
+.button__container {
+
+}
+
+.button {
+    display: block;
+    width: 100%;
+    padding: 10px 0;
+    background: #4DD599;
+    border-radius: 4px;
+    text-align: center;
+    cursor: pointer;
+    border: 0px solid transparent;
+    transition: 0.5s;
+}
+
+button:hover {
+    background: #339d64;
+}
+
+button:active {
+    background: #4DD599;
+}
+
+.text {
+    font-style: normal;
+    font-weight: 600;
+    font-size: 14px;
+    line-height: 17px;
+    text-align: center;
+    color: #FFFFFF;
+}

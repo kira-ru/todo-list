@@ -1,0 +1,37 @@
+.add {
+
+}
+
+.addButton {
+    display: inline-flex;
+    align-items: center;
+    padding: 10px 12px;
+    margin: 38px 0 0 0;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.add:hover {
+    .text {
+        color: #000;
+    }
+}
+
+.add:hover path{
+    stroke: #000;
+}
+
+.icon {
+    margin: 0 10px 0 0;
+}
+
+.text {
+    font-style: normal;
+    font-weight: 500;
+    font-size: 14px;
+    line-height: 17px;
+    letter-spacing: 0.15px;
+    color: #767676;
+}
+
+
