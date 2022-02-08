@@ -14,12 +14,25 @@
     transition: 0.5s;
 }
 
-button:hover {
+.button:hover {
     background: #339d64;
 }
 
-button:active {
+.button:active {
     background: #4DD599;
+}
+
+.grey {
+    background-color: #F4F6F8;
+}
+
+
+.button:hover.grey{
+    background: #c7c7c7;
+}
+
+.button:active.grey {
+    background-color: #F4F6F8
 }
 
 .text {
@@ -29,4 +42,16 @@ button:active {
     line-height: 17px;
     text-align: center;
     color: #FFFFFF;
+}
+
+.grey .text {
+    color: #9C9C9C;
+}
+
+.grey:hover .text {
+    color: #f5f5f5;
+}
+
+.grey:active .text {
+    color: #9C9C9C;
 }

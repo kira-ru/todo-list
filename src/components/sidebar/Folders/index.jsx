@@ -1,34 +1,28 @@
 import React, {useContext, useState} from "react";
-import Folder from "./Folder";
+import Folder from "./components/Folder/Folder";
 import icon from '../../../assets/images/Vector.svg'
-import styles from "./Folder.module.css";
-import Context from "../../todo-list/context";
+import styles from "./components/Folder/folder.module.css";
+import AllFolders from "./components/Folder/AllFolders";
 
 
-const Folders = ({folders}) => {
-    const [activeItem, setActiveItem] = useState(999);
-    const {removeFolder} = useContext(Context);
+const Folders = ({folders, activeItem, setActiveItem}) => {
 
     return (
         <div className={styles.folders}>
-            {/* Папка "все задачи*/}
-            <Folder
-                setActive={() => setActiveItem(999)}
-                key={999}
-                name={"Все задачи"}
+
+            <AllFolders
+                setActive={() => setActiveItem(0)}
+                active={activeItem === 0}
                 icon={icon}
-                active={activeItem === 999}
             />
 
-            {/* Остальные папки */}
-            {folders.map((item, index) => <Folder
-                    setActive={() => setActiveItem(index)}
-                    key={index}
+            {folders && folders.map((item) => <Folder
+                    setActive={() => setActiveItem(item.id)}
+                    key={item.id}
+                    item={item}
                     name={item.name}
-                    color={item.color}
-                    active={activeItem === index}
-                    isRemovable={true}
-                    removeFolder={() => removeFolder(item.id)}
+                    color={item.color.name}
+                    active={activeItem === item.id}
                 />
             )}
         </div>

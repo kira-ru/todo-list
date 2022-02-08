@@ -1,7 +1,7 @@
-import styles from "./AddButton.module.scss";
+import styles from "./addButton.module.scss";
 import addImg from "../../../assets/images/add.svg";
 import React, {useState} from "react";
-import PopUp from "./PopUp";
+import PopUp from "./components/PopUp";
 
 
 const Add = ({colors}) => {
@@ -12,7 +12,7 @@ const Add = ({colors}) => {
     }
 
     return (
-        <div className={styles.add}>
+        <div className={styles.container}>
 
             <div onClick={togglePopUp} className={`${styles.addButton}`}>
                 <img className={styles.icon} src={addImg} alt="icon"/>

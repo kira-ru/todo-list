@@ -1,5 +1,6 @@
 .popUp {
-    position: relative;
+    z-index: 999;
+    position: absolute;
     left: 50px;
     padding: 18px;
     height: 150px;

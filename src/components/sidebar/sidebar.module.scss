@@ -1,11 +1,17 @@
 .sidebar {
-    width: 200px;
-    height: 100%;
-    background: #E5E5E5;
-    border-right: 1px solid #c9c5c5;
-    border-radius: 10px 0px 0px 10px;
+  width: 200px;
+  height: 100%;
+  background: #E5E5E5;
+  border-right: 1px solid #c9c5c5;
+  border-radius: 10px 0px 0px 10px;
+  overflow: hidden;
 }
 
+@media (max-width: 479.98px) {
+  .sidebar {
+    max-width: 100px;
+  }
+}
 
 .task_list > div {
 }

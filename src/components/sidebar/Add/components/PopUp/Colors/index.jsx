@@ -1,7 +1,7 @@
 import styles from './Colors.module.css';
 
 import React from "react";
-import Badge from "../../../../UI/Badge";
+import Badge from "../../../../../UI/Badge";
 
 
 const Colors = ({colors, activeColor, setColor}) => {

@@ -1,15 +1,15 @@
 import styles from './PopUp.module.css'
 import React, {useContext, useState} from "react";
-import Input from "../../../UI/Input";
-import Button from "../../../UI/Button";
-import close from '../../../../assets/images/close.svg';
+import Input from "../../../../UI/Input";
+import Button from "../../../../UI/Button";
+import close from '../../../../../assets/images/close.svg';
 import Colors from "./Colors";
-import Context from "../../../todo-list/context";
+import Context from "../../../../todo-list/context";
 
 
 const PopUp = ({colors, toggle}) => {
     const [inputValue, setInputValue] = useState('');
-    const [activeColor, setActiveColor] = useState(null);
+    const [activeColor, setActiveColor] = useState(1);
     const {addFolder} = useContext(Context);
 
     const handleChange = (e) => {
@@ -17,7 +17,14 @@ const PopUp = ({colors, toggle}) => {
     }
 
     const onAdd = () => {
-        addFolder(Math.random(), inputValue, activeColor);
+
+        if (!inputValue) {
+            alert('Введите название папки');
+            return;
+        }
+
+        let colorObj = colors.find(color => color.id === activeColor);
+        addFolder(inputValue, activeColor, colorObj);
         toggle();
     }
 
@@ -30,7 +37,7 @@ const PopUp = ({colors, toggle}) => {
 
             <Input placeHolder={'Название папки'} handleChange={handleChange}/>
             <Colors colors={colors} setColor={setActiveColor} activeColor={activeColor}/>
-            <Button text={'Сохранить'} onAdd={onAdd}/>
+            <Button  handleClick={onAdd} text={'Сохранить'}/>
         </div>
     )
 }

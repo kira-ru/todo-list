@@ -3,117 +3,100 @@ import styles from './todo.module.scss';
 import Context from "./context";
 import SideBar from "../sidebar";
 import Tasks from "../tasks";
-import API from '../../DAL/index';
+import API from '../../API/index';
+import Preloader from "../UI/Preloader";
+import {Routes, Route, useLocation} from 'react-router-dom';
 
-const TodoListApp = (props) => {
-    const [folders, setFolders] = useState([
-        {
-            "id": 1,
-            "name": "Продажи",
-            "colorId": 5
-        },
-        {
-            "id": 2,
-            "name": "Фронтенд",
-            "colorId": 4
-        },
-        {
-            "id": 3,
-            "name": "Фильмы и сериалы",
-            "colorId": 3
-        },
-        {
-            "id": 4,
-            "name": "Книги",
-            "colorId": 2
-        },
-        {
-            "id": 5,
-            "name": "Личное",
-            "colorId": 1
-        },
-        {
-            "id": 6,
-            "name": "Спорт",
-            "colorId": 3,
 
-        },
-        {
-            "id": 7,
-            "name": "Курс по ReactJS ToDo",
-            "colorId": 7,
-        }
-    ]);
+const TodoListApp = () => {
+    const [folders, setFolders] = useState(null);
+    const [activeItem, setActiveItem] = useState(null);
+    const [colors, setColors] = useState(null);
+    let location = useLocation();
 
-    const [colors, setColors] = useState([
-        {
-            "id": 1,
-            "hex": "#C9D1D3",
-            "name": "grey"
-        },
-        {
-            "id": 2,
-            "hex": "#42B883",
-            "name": "green"
-        },
-        {
-            "id": 3,
-            "hex": "#64C4ED",
-            "name": "blue"
-        },
-        {
-            "id": 4,
-            "hex": "#FFBBCC",
-            "name": "pink"
-        },
-        {
-            "id": 5,
-            "hex": "#B6E6BD",
-            "name": "lime"
-        },
-        {
-            "id": 6,
-            "hex": "#C355F5",
-            "name": "purple"
-        },
-        {
-            "id": 7,
-            "hex": "#110133",
-            "name": "black"
-        },
-        {
-            "id": 8,
-            "hex": "#FF6464",
-            "name": "red"
-        }]);
 
-    const getInitState = async () => {
-        let folders = await API.getFolder();
+    useEffect(async () => {
+        let folders = await API.getFolders();
         setFolders(folders);
 
         let colors = await API.getColors();
         setColors(colors);
-    }
-
-    useEffect(() => {
-        getInitState();
-        debugger;
     }, [])
 
-    const addFolder = (id, name, colorId) => {
-        setFolders([...folders, {id, name, colorId}])
+    useEffect(() => {
+        let activeItem = location.pathname.split('folders/')[1];
+        activeItem ? setActiveItem(Number(activeItem)) : setActiveItem(0)
+    }, [folders, location.pathname])
+
+
+    async function addFolder (name, colorId, colorObj) {
+        let response = await API.addFolder({name, colorId});
+
+        setFolders([...folders, {...response, color: colorObj}]);
     }
 
     const removeFolder = (folderId) => {
+        setActiveItem(0)
         setFolders(folders.filter(folder => folder.id !== folderId));
+        let res = API.deleteFolder(folderId);
     }
 
-
-    const foldersWithColor = () => {
-        folders.map(item => {
-            item.color = colors.find(color => color.id === item.colorId).name;
+    function onEditFolderName(id, name) {
+        let newFolders = folders.map(folder => {
+            if (folder.id === id) {
+                folder.name = name
+            }
+            return folder
         })
-        return folders;
+        setFolders([...newFolders]);
+        API.updateFolder(id, name);
+    }
+
+    async function onAddTask(task) {
+        const taskWithID = await API.addTask(task);
+
+        let newList = folders.map(folder => {
+            if (folder.id === taskWithID.listId) {
+                folder.tasks = [...folder.tasks, taskWithID]
+            }
+            return folder;
+        })
+
+        setFolders(newList);
+    }
+
+    function deleteTask(taskID, folderID) {
+        const newList = folders.map(folder => {
+            if (folder.id === folderID) {
+                folder.tasks = folder.tasks.filter(task => task.id !== taskID);
+            }
+            return folder;
+        })
+
+        API.deleteTask(taskID);
+        setFolders(newList)
+    }
+
+    function editTask(taskID, taskText, folderID) {
+        const newText = prompt('Текст задачи', taskText)
+
+        if (newText) {return}
+
+        const newList = folders.map(folder => {
+            if (folder.id === folderID) {
+                folder.tasks = folder.tasks.map(task => {
+                    if (task.id === taskID) {
+                        task.text = newText;
+                    }
+                    return task
+                })
+            }
+
+            return folder
+        })
+
+        API.updateTask(taskID, newText);
+        setFolders(newList);
     }
 
     const contextValue = {
@@ -121,12 +104,46 @@ const TodoListApp = (props) => {
         removeFolder,
     }
 
+
+    if (!colors && !folders) {
+        return <Preloader/>
+    }
+
     return (
+
         <Context.Provider value={contextValue}>
 
-            <div className={styles.todo}>
-                <SideBar folders={foldersWithColor()} colors={colors}/>
-                <Tasks/>
+            <div className={styles.container}>
+
+                <div className={styles.todo}>
+                    <SideBar folders={folders} colors={colors} activeItem={activeItem} setActiveItem={setActiveItem}/>
+
+                    <div className={styles.tasksRow}>
+                        <Routes>
+                            <Route path='/folders/:id' element={
+                                !!activeItem && <Tasks
+                                    folder={folders[activeItem - 1]}
+                                    onEditFolderName={onEditFolderName}
+                                    onAddTask={onAddTask}
+                                    onDelete={deleteTask}
+                                    onEdit={editTask}
+                                />
+                            }/>
+
+                            <Route path='/' element={
+                                !activeItem && folders.map(folder => <Tasks
+                                        key={folder.id}
+                                        folder={folder}
+                                        onEditFolderName={onEditFolderName}
+                                        onAddTask={onAddTask}
+                                        onDelete={deleteTask}
+                                        onEdit={editTask}
+                                    />
+                                )
+                            }/>
+                        </Routes>
+                    </div>
+                </div>
             </div>
 
         </Context.Provider>

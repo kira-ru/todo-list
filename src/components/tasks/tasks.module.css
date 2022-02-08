@@ -1,0 +1,19 @@
+.tasks {
+    padding: 57px 57px 57px 57px;
+}
+
+@media (max-width: 767.98px) {
+    .tasks {
+        padding: 30px 20px 30px 22px;
+    }
+}
+
+.tasksMiss {
+    margin: 0 0 60px 0;
+    text-align: center;
+    font-weight: 500;
+    font-size: 16px;
+    line-height: 19px;
+    color: #000000;
+}
+

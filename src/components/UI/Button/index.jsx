@@ -1,14 +1,17 @@
 import React from "react";
 import styles from './button.module.css'
+import classNames from "classnames";
 
-const Button = ({text, onAdd}) => {
+const Button = ({text, handleClick, type}) => {
+    const className = classNames(styles.button, {
+        [styles.grey]: type,
+    })
+
 
     return (
-        <div className={styles.button__container}>
-            <button onClick={onAdd} className={styles.button}>
-                <span className={styles.text}>{text}</span>
-            </button>
-        </div>
+        <button onClick={handleClick} className={className}>
+            <span className={styles.text}>{text}</span>
+        </button>
     )
 }
 

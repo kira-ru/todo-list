@@ -1,6 +1,7 @@
 .task {
     display: flex;
     align-items: center;
+    margin: 15px 0 0 0;
 }
 
 .task input {
@@ -49,7 +50,13 @@ input:checked + .container svg path{
     stroke: #FFFFFF;
 }
 
+input:checked + .container {
+    background: #339d64;
+    border: #339d64;
+}
+
 .text {
+    flex: 1 0;
     display: inline-block;
     font-weight: 500;
     font-size: 16px;
@@ -57,26 +64,34 @@ input:checked + .container svg path{
     color: #000000;
 }
 
-input:checked + .container {
-    background: #339d64;
-    border: #339d64;
+.edit {
+    cursor: pointer;
+    margin: 0 10px 0 0;
 }
 
-/*
-.checkbox:hover svg path {
-    stroke: #b2b2b2;
+.edit img {
+    width: 20px;
+    height: 20px;
+    opacity: 0;
 }
 
-.checkbox:hover label {
-    background: #f2f2f2;
+
+.removeIcon {
+    cursor: pointer;
+    opacity: 1;
+    text-align: right;
 }
 
-input:checked + label {
-    background: #339d64;
-    border: #339d64;
+.removeIcon img {
+    opacity: 0;
+    width: 30px;
+    height: 30px;
 }
 
-input:checked + label svg {
-    opacity: 0.8;
+.task:hover img {
+    opacity: 0.5;
 }
-*/
+
+.removeIcon:active img{
+    opacity: 1;
+}

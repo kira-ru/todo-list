@@ -4,6 +4,12 @@
     flex-direction: column;
 }
 
+@media (max-width: 479.98px) {
+    .folders {
+        padding: 45px 20px 0 25px;
+    }
+}
+
 .folder {
     display: flex;
     align-items: center;
@@ -15,14 +21,22 @@
     cursor: pointer;
 }
 
+.item {
+    display: flex;
+    flex-basis: 90%;
+    padding: 10px 12px;
+    align-items: center;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+}
+
 .icon {
     margin: 0 10px 0 0;
 }
 
 .text {
-    text-overflow: ellipsis;
-    overflow: hidden;
-    white-space: nowrap;
+
 }
 
 .removeIcon {
@@ -30,10 +44,6 @@
     height: 20px;
     opacity: 1;
     text-align: right;
-}
-
-.removeIcon {
-    flex: 1;
 }
 
 .removeIcon img {
